@@ -7,6 +7,7 @@ function ViewModel() {
   this.isPlaying = ko.observable(false);
   this.locations = ko.observableArray();
   this.currentLocation = ko.observable();
+  this.dataFile = ko.observable("testdata");
 
   // expose the model as a JSON property
   this.serializedModel = ko.computed(function() {
