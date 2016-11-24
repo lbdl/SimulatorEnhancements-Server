@@ -6,7 +6,7 @@ function Model() {
   };
 
   this.location = {
-    latitude : ko.observable(54.99),
-    longitude : ko.observable(-1.62)
+    latitude : ko.observable(51.521732),
+    longitude : ko.observable(-0.134491)
   };
 }
