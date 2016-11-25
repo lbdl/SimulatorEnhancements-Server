@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <title>Simulator Enhancement</title>
@@ -8,16 +7,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyD8v4tG57zLqarfcM7Ti8ygbR9o2tpnIwk"></script>
 
-    <script src="/bower_components/jquery/dist/jquery.js"></script>
-    <script src="/bower_components/bootstrap/js/tab.js"></script>
-    <script src="/bower_components/threejs/build/three.js"></script>
-    <script src="/bower_components/knockoutjs/build/knockout-raw.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/bootstrap/js/tab.js"></script>
+    <script src="bower_components/threejs/build/three.js"></script>
+    <script src="bower_components/knockoutjs/build/knockout-raw.js"></script>
 
     <script src="throttle.js"></script>
 
-    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
 
     <style type="text/css">
         .tab-pane {
@@ -55,9 +54,9 @@
                     <button class="btn" data-bind="enable:!isPlaying() && locations().length > 1, click:play">Play
                     </button>
                     <button class="btn" data-bind="enable: isPlaying, click:stop">Stop</button>
+                    <button class="btn" data-bind="enable: dataFile, click:loadFileData">Load</button>
                     <button class="btn" data-bind="enable: locations().length > 0, click:removeAll">Remove All</button>
-                    <button class="btn" data-bind="enable:!isPLaying(), click:loadData">Load Data</button>
-                    <p>Test Data File: <input data-bind="value: dataFile"/></p>
+                    <input id="filename" type="file" class="in" data-bind="value: dataFile">
                 </div>
             </div>
         </div>
@@ -97,16 +96,15 @@
         resize();
     }
     $(window).resize(resizeTabs);
-    $(window).load(resizeTabs);
+    $(window).on('load', resizeTabs);
 </script>
 
-<script src="/model.js"></script>
-<script src="/viewModel.js"></script>
+<script src="model.js"></script>
+<script src="viewModel.js"></script>
 
-<script src="/accelerometer.js"></script>
-<script src="/map.js"></script>
+<script src="accelerometer.js"></script>
+<script src="map.js"></script>
+<script src="jquery-csv.js"></script>
 
-
-<body>
 </body>
 </html>
