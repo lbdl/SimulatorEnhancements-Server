@@ -43,17 +43,21 @@
 
     <div class="tab-pane  full-height active" id="geo">
         <div id='map' class="full-size"></div>
-        <div id='panels' class="panel-group">
             <div id="info" class="panel panel-info" style="position:absolute; top:10px; left:10px; width:270px;">
                 <div class="panel-heading">
-                    <div class="panel-title">Test Data</div>
+                    <div class="panel-title">Test Data
+                    </div>
                 </div>
                 <div class="panel-body">
+                    <div data-bind="visible: isLoaded">
+                        Loaded data from: <span data-bind="text: dataFile"></span>
+                    </div>
                     <div>
                         <input id="filename" type="file" class="in" data-bind="value: dataFile">
                         <br>
                         <button class="btn" data-bind="enable: dataFile, click:loadFileData">Load</button>
                         <button class="btn" data-bind="enable: dataFile, click:playData">Play</button>
+                        <!--<button class="btn" data-bind="enable: dataFile, click:plotData">Plot</button>-->
                     </div>
                 </div>
             </div>
@@ -74,7 +78,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+
     </div>
 
     <div class="tab-pane full-height" id="acc">

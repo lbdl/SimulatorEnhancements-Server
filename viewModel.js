@@ -1,13 +1,11 @@
 function ViewModel() {
 
-    // var $ = jQuery = require('jquery');
-    // require('./jquery.csv.js');
-
     var that = this, timerHandle;
 
     // ------ properties
     this.model = new Model();
     this.isPlaying = ko.observable(false);
+    this.isLoaded = ko.observable();
     this.locations = ko.observableArray();
     this.currentLocation = ko.observable();
     this.dataFile = ko.observable();
@@ -24,44 +22,35 @@ function ViewModel() {
         that.isPlaying(false);
     };
 
-    this.dataSet = function () {
-        if (this.dataFile) {
-            return true;
-        } else {
-            return false;
-        }
-    };
 
     this.removeAll = function () {
         that.locations.removeAll();
         that.coordinateData.removeAll();
     };
 
-    this.playCoordinateData = function (coordinates) {
+    this.playData = function (coordinates) {
 
     };
 
-    this.play = function () {
 
-        if (typeof this.coordinateData != "undefined" && array != null && array.length > 0) {
-            this.playCoordinateData(this.coordinateData);
-        } else {
-            var time = 0;
-            this.isPlaying(true);
-            timerHandle = setInterval(function () {
-                var locationCount = that.locations().length - 1;
-                var index = Math.floor(locationCount * time);
-                var leftLocation = that.locations()[index];
-                var rightLocation = that.locations()[index + 1];
-                var fraction = (time * locationCount - index);
-                that.currentLocation(google.maps.geometry.spherical.interpolate(leftLocation, rightLocation, fraction));
-                time += 0.01;
-                if (time >= 1.0) {
-                    clearInterval(timerHandle);
-                    that.isPlaying(false);
-                }
-            }, 100);
-        }
+    this.play = function() {
+        var time = 0;
+        this.isPlaying(true);
+        timerHandle = setInterval(function() {
+            var locationCount = that.locations().length - 1;
+            var index = Math.floor(locationCount * time);
+            var leftLocation = that.locations()[index];
+            var rightLocation = that.locations()[index + 1];
+            var fraction = (time * locationCount - index);
+
+            that.currentLocation(google.maps.geometry.spherical.interpolate(leftLocation, rightLocation, fraction));
+
+            time += 0.01;
+            if (time>=1.0) {
+                clearInterval(timerHandle);
+                that.isPlaying(false);
+            }
+        }, 100);
     };
 
     this.loadFileData = function () {
@@ -70,15 +59,16 @@ function ViewModel() {
             reader.onload = function (e) {
                 var contents = e.target.result;
                 contents = contents.replace(/\s/g, '');
-                var coordinateData = contents.split(';');
+                var coordinates = contents.split(';');
 
-                coordinateData.forEach(function (item) {
+                coordinates.forEach(function (item) {
                     var str = item.split(',');
                     var glatlng = new google.maps.LatLng(parseFloat(str[0]), parseFloat(str[1]));
                     that.coordinateData.push(glatlng);
                 });
+                that.isLoaded(true);
+                that.dataFile(document.querySelector('input').files[0].val());
             };
-
             reader.readAsText(document.querySelector('input').files[0]);
         } else {
             alert("Failed to load file");
