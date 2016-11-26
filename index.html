@@ -7,7 +7,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyD8v4tG57zLqarfcM7Ti8ygbR9o2tpnIwk"></script>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyD8v4tG57zLqarfcM7Ti8ygbR9o2tpnIwk"></script>
 
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/bootstrap/js/tab.js"></script>
@@ -42,21 +43,35 @@
 
     <div class="tab-pane  full-height active" id="geo">
         <div id='map' class="full-size"></div>
-        <div class="panel panel-primary" style="position:absolute; top:10px; right:10px; width:270px;">
-            <div class="panel-heading">
-                <div class="panel-title">Location</div>
+        <div id='panels' class="panel-group">
+            <div id="info" class="panel panel-info" style="position:absolute; top:10px; left:10px; width:270px;">
+                <div class="panel-heading">
+                    <div class="panel-title">Test Data</div>
+                </div>
+                <div class="panel-body">
+                    <div>
+                        <input id="filename" type="file" class="in" data-bind="value: dataFile">
+                        <br>
+                        <button class="btn" data-bind="enable: dataFile, click:loadFileData">Load</button>
+                        <button class="btn" data-bind="enable: dataFile, click:playData">Play</button>
+                    </div>
+                </div>
             </div>
-            <div class="panel-body">
-                <b>Lat:</b> <span data-bind="text: model.location.latitude().toFixed(4)"></span><br/>
-                <b>Long:</b> <span data-bind="text: model.location.longitude().toFixed(4)"></span><br/>
-                <b>Data File Name:</b> <span data-bind="text: viewModel.dataFile"></span><br/>
-                <div>
-                    <button class="btn" data-bind="enable:!isPlaying() && locations().length > 1, click:play">Play
-                    </button>
-                    <button class="btn" data-bind="enable: isPlaying, click:stop">Stop</button>
-                    <button class="btn" data-bind="enable: dataFile, click:loadFileData">Load</button>
-                    <button class="btn" data-bind="enable: locations().length > 0, click:removeAll">Remove All</button>
-                    <input id="filename" type="file" class="in" data-bind="value: dataFile">
+
+            <div class="panel panel-primary" style="position:absolute; top:10px; right:10px; width:270px;">
+                <div class="panel-heading">
+                    <div class="panel-title">Location</div>
+                </div>
+                <div class="panel-body">
+                    <b>Lat:</b> <span data-bind="text: model.location.latitude().toFixed(4)"></span><br/>
+                    <b>Long:</b> <span data-bind="text: model.location.longitude().toFixed(4)"></span><br/>
+                    <div>
+                        <button class="btn" data-bind="enable:!isPlaying() && locations().length > 1, click:play">Play
+                        </button>
+                        <button class="btn" data-bind="enable: isPlaying, click:stop">Stop</button>
+                        <button class="btn" data-bind="enable: locations().length > 0, click:removeAll">Remove All
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

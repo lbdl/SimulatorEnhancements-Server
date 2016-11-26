@@ -24,44 +24,54 @@ function ViewModel() {
         that.isPlaying(false);
     };
 
-    this.dataSet = function() {
+    this.dataSet = function () {
         if (this.dataFile) {
             return true;
-        }else {
+        } else {
             return false;
         }
     };
 
     this.removeAll = function () {
         that.locations.removeAll();
+        that.coordinateData.removeAll();
+    };
+
+    this.playCoordinateData = function (coordinates) {
+
     };
 
     this.play = function () {
-        var time = 0;
-        this.isPlaying(true);
-        timerHandle = setInterval(function () {
-            var locationCount = that.locations().length - 1;
-            var index = Math.floor(locationCount * time);
-            var leftLocation = that.locations()[index];
-            var rightLocation = that.locations()[index + 1];
-            var fraction = (time * locationCount - index);
-            that.currentLocation(google.maps.geometry.spherical.interpolate(leftLocation, rightLocation, fraction));
-            time += 0.01;
-            if (time >= 1.0) {
-                clearInterval(timerHandle);
-                that.isPlaying(false);
-            }
-        }, 100);
+
+        if (typeof this.coordinateData != "undefined" && array != null && array.length > 0) {
+            this.playCoordinateData(this.coordinateData);
+        } else {
+            var time = 0;
+            this.isPlaying(true);
+            timerHandle = setInterval(function () {
+                var locationCount = that.locations().length - 1;
+                var index = Math.floor(locationCount * time);
+                var leftLocation = that.locations()[index];
+                var rightLocation = that.locations()[index + 1];
+                var fraction = (time * locationCount - index);
+                that.currentLocation(google.maps.geometry.spherical.interpolate(leftLocation, rightLocation, fraction));
+                time += 0.01;
+                if (time >= 1.0) {
+                    clearInterval(timerHandle);
+                    that.isPlaying(false);
+                }
+            }, 100);
+        }
     };
 
     this.loadFileData = function () {
         if (document.querySelector('input').files[0]) {
             var reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 var contents = e.target.result;
-                contents = contents.replace(/\s/g,'');
+                contents = contents.replace(/\s/g, '');
                 var coordinateData = contents.split(';');
-                
+
                 coordinateData.forEach(function (item) {
                     var str = item.split(',');
                     var glatlng = new google.maps.LatLng(parseFloat(str[0]), parseFloat(str[1]));
