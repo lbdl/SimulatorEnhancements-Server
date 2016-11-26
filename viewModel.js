@@ -11,8 +11,7 @@ function ViewModel() {
     this.locations = ko.observableArray();
     this.currentLocation = ko.observable();
     this.dataFile = ko.observable();
-    this.testData = ko.observable();
-    this.coordinated = ko.observableArray();
+    this.coordinateData = [];
 
     // expose the model as a JSON property
     this.serializedModel = ko.computed(function () {
@@ -58,16 +57,23 @@ function ViewModel() {
     this.loadFileData = function () {
         if (document.querySelector('input').files[0]) {
             var reader = new FileReader();
-
             reader.onload = function(e) {
                 var contents = e.target.result;
-                testData = contents.split(';');
+                contents = contents.replace(/\s/g,'');
+                var coordinateData = contents.split(';');
+                
+                coordinateData.forEach(function (item) {
+                    var str = item.split(',');
+                    var glatlng = new google.maps.LatLng(parseFloat(str[0]), parseFloat(str[1]));
+                    that.coordinateData.push(glatlng);
+                });
             };
 
             reader.readAsText(document.querySelector('input').files[0]);
         } else {
             alert("Failed to load file");
         }
+
     };
 
     // update the model when the currentLocation property changes
