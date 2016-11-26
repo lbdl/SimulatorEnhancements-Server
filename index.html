@@ -50,14 +50,15 @@
                 </div>
                 <div class="panel-body">
                     <div data-bind="visible: isLoaded">
-                        Loaded data from: <span data-bind="text: dataFile"></span>
+                        Data Loaded.
+                        <!--Loaded data from: <span data-bind="text: dataFile"></span>-->
                     </div>
                     <div>
                         <input id="filename" type="file" class="in" data-bind="value: dataFile">
                         <br>
                         <button class="btn" data-bind="enable: dataFile, click:loadFileData">Load</button>
                         <button class="btn" data-bind="enable: dataFile, click:playData">Play</button>
-                        <!--<button class="btn" data-bind="enable: dataFile, click:plotData">Plot</button>-->
+                        <button class="btn" data-bind="enable: dataFile, click:plotData">Plot</button>
                     </div>
                 </div>
             </div>

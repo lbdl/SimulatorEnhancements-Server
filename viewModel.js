@@ -32,6 +32,10 @@ function ViewModel() {
 
     };
 
+    this.plotData = function () {
+        addDataPins(this.coordinateData);
+    };
+
 
     this.play = function() {
         var time = 0;
@@ -67,7 +71,7 @@ function ViewModel() {
                     that.coordinateData.push(glatlng);
                 });
                 that.isLoaded(true);
-                that.dataFile(document.querySelector('input').files[0].val());
+                // that.dataFile(document.querySelector('input').files[0].val());
             };
             reader.readAsText(document.querySelector('input').files[0]);
         } else {
