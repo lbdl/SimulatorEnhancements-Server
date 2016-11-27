@@ -34,6 +34,7 @@ function ViewModel() {
 
     this.plotData = function () {
         addDataPins(this.coordinateData);
+        plotPath(this.coordinateData);
     };
 
 
@@ -57,9 +58,49 @@ function ViewModel() {
         }, 100);
     };
 
+    this.parseJson = function(json) {
+        if(/TripStops/.test(json)) {
+            this.parseTripResponse(json);
+        }
+    };
+
+    this.parseTripResponse = function(json) {
+        try {
+            var tripResponseObj = JSON.parse(json);
+        }
+        catch(e) {
+            if (e instanceof SyntaxError) {
+                alert(`Bad JSON ${SyntaxError}`);
+            }else {
+                alert("Error (undefined)");
+            }
+        }
+        if(tripResponseObj) {
+            alert("Got trop");
+        }
+    };
+
+    this.parseTxt = function(text) {
+        alert("NOT JSON");
+    };
+
     this.loadFileData = function () {
         if (document.querySelector('input').files[0]) {
             var reader = new FileReader();
+
+            reader.onloadend = function (e) {
+                if (e.target.error || !e.target.result) {
+                    alert(`Houston, we have a problem: ${e.target.error}`);
+                }else {
+                    var raw = e.target.result;
+                    if (/".*: "/.test(raw)) {
+                        that.parseJson(raw);
+                    }else {
+                        that.parseTxt(raw);
+                    }
+                }
+            };
+
             reader.onload = function (e) {
                 var contents = e.target.result;
                 contents = contents.replace(/\s/g, '');
@@ -71,7 +112,6 @@ function ViewModel() {
                     that.coordinateData.push(glatlng);
                 });
                 that.isLoaded(true);
-                // that.dataFile(document.querySelector('input').files[0].val());
             };
             reader.readAsText(document.querySelector('input').files[0]);
         } else {

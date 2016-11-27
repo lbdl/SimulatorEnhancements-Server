@@ -53,6 +53,17 @@ var addDataPins = function (coords) {
     });
 };
 
+var plotPath = function(coords) {
+    var path = new google.maps.Polyline({
+        path: coords,
+        geodesic: true,
+        strokeColor: '#FFDD0D',
+        strokeOpacity: 1.0,
+        strokeWeight: 2,
+        map: map
+    });
+}
+
 var currentLocationMarker = undefined;
 viewModel.currentLocation.subscribe(function (currentLocation) {
     if (!currentLocationMarker) {
