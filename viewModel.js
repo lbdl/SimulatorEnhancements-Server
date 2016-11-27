@@ -76,7 +76,12 @@ function ViewModel() {
             }
         }
         if(tripResponseObj) {
-            alert("Got trop");
+            var tripStops = tripResponseObj.TripStops;
+            var polyLine = tripResponseObj.Polyline;
+
+            tripStops.forEach(function(ts) {
+                var ts = new TransitStop();
+            });
         }
     };
 
